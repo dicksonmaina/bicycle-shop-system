@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Suppliers - Bicycle Shop{% endblock %}
+{% block content %}
+<h1>Suppliers</h1>
+<a href="/suppliers/add"><button>Add Supplier</button></a>
+<table>
+    <thead>
+        <tr><th>Name</th><th>Contact</th><th>Email</th><th>Phone</th><th>Address</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+        {% for supplier in suppliers %}
+        <tr>
+            <td>{{ supplier.name }}</td>
+            <td>{{ supplier.contact_person }}</td>
+            <td>{{ supplier.email }}</td>
+            <td>{{ supplier.phone }}</td>
+            <td>{{ supplier.address }}</td>
+            <td>
+                <a href="/suppliers/{{ supplier.id }}/edit">Edit</a>
+                <form action="/suppliers/{{ supplier.id }}/delete" method="POST" style="display:inline;" onsubmit="return confirm('Delete?')">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

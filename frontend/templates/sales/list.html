@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Sales - Bicycle Shop{% endblock %}
+{% block content %}
+<h1>Sales</h1>
+<a href="/sales/add"><button>New Sale</button></a>
+<table>
+    <thead>
+        <tr><th>Customer</th><th>Total</th><th>Payment</th><th>Status</th><th>Date</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+        {% for sale in sales %}
+        <tr>
+            <td>{{ sale.customer.name if sale.customer else 'N/A' }}</td>
+            <td>KSh {{ "%.2f"|format(sale.total) }}</td>
+            <td>{{ sale.payment_method }}</td>
+            <td>{{ sale.status }}</td>
+            <td>{{ sale.created_at.strftime('%Y-%m-%d') }}</td>
+            <td><a href="/sales/{{ sale.id }}">View</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

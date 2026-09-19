@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Reports - Bicycle Shop{% endblock %}
+{% block content %}
+<h1>Reports</h1>
+<form method="GET">
+    <select name="period" onchange="this.form.submit()">
+        <option value="day" {% if period == 'day' %}selected{% endif %}>Today</option>
+        <option value="week" {% if period == 'week' %}selected{% endif %}>Last 7 Days</option>
+        <option value="month" {% if period == 'month' %}selected{% endif %}>Last 30 Days</option>
+    </select>
+</form>
+<div class="stats">
+    <div class="stat-card">
+        <h3>Sales</h3>
+        <p>KSh {{ "%.2f"|format(sales_data) }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Repairs</h3>
+        <p>{{ repairs_data }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>New Customers</h3>
+        <p>{{ customers_data }}</p>
+    </div>
+</div>
+{% endblock %}

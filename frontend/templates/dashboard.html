@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Bicycle Shop{% endblock %}
+{% block content %}
+<h1>Dashboard</h1>
+<div class="stats">
+    <div class="stat-card">
+        <h3>Repairs Today</h3>
+        <p>{{ repairs_today }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Pending Repairs</h3>
+        <p>{{ pending_repairs }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Low Stock Items</h3>
+        <p>{{ low_stock }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Total Customers</h3>
+        <p>{{ customers }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Total Bicycles</h3>
+        <p>{{ bicycles }}</p>
+    </div>
+    <div class="stat-card">
+        <h3>Sales Today</h3>
+        <p>KSh {{ "%.2f"|format(sales_today) }}</p>
+    </div>
+</div>
+
+<h2>Recent Repairs</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Customer</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for repair in recent_repairs %}
+        <tr>
+            <td>{{ repair.id }}</td>
+            <td>{{ repair.customer.name if repair.customer else 'N/A' }}</td>
+            <td>{{ repair.description[:50] }}{% if repair.description|length > 50 %}...{% endif %}</td>
+            <td>{{ repair.status }}</td>
+            <td>{{ repair.priority }}</td>
+            <td>{{ repair.created_at.strftime('%Y-%m-%d') }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

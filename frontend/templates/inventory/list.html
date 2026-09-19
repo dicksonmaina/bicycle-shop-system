@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Inventory - Bicycle Shop{% endblock %}
+{% block content %}
+<h1>Inventory</h1>
+<a href="/inventory/add"><button>Add Item</button></a>
+<form method="GET" style="display:inline;">
+    <input type="text" name="search" placeholder="Search..." value="{{ search }}">
+    <button type="submit">Search</button>
+</form>
+<table>
+    <thead>
+        <tr><th>Name</th><th>Category</th><th>Qty</th><th>Min</th><th>Unit Price</th><th>Supplier</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr style="{% if item.quantity < item.min_quantity %}background:#fff3cd;{% endif %}">
+            <td>{{ item.name }}</td>
+            <td>{{ item.category }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.min_quantity }}</td>
+            <td>KSh {{ "%.2f"|format(item.unit_price) }}</td>
+            <td>{{ item.supplier.name if item.supplier else 'N/A' }}</td>
+            <td>
+                <a href="/inventory/{{ item.id }}/edit">Edit</a>
+                <form action="/inventory/{{ item.id }}/delete" method="POST" style="display:inline;" onsubmit="return confirm('Delete?')">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

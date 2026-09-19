@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Notifications - Bicycle Shop{% endblock %}
+{% block content %}
+<h1>Notifications</h1>
+<table>
+    <thead>
+        <tr><th>Title</th><th>Message</th><th>Type</th><th>Read</th><th>Date</th></tr>
+    </thead>
+    <tbody>
+        {% for notification in notifications %}
+        <tr style="{% if not notification.read %}font-weight:bold;{% endif %}">
+            <td>{{ notification.title }}</td>
+            <td>{{ notification.message }}</td>
+            <td>{{ notification.type }}</td>
+            <td>{{ 'Yes' if notification.read else 'No' }}</td>
+            <td>{{ notification.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

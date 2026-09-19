@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Customers - Bicycle Shop{% endblock %}
+{% block content %}
+<h1>Customers</h1>
+<a href="/customers/add"><button>Add Customer</button></a>
+<form method="GET" style="display:inline;">
+    <input type="text" name="search" placeholder="Search..." value="{{ search }}">
+    <button type="submit">Search</button>
+</form>
+<table>
+    <thead>
+        <tr><th>Name</th><th>Phone</th><th>Email</th><th>Address</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+        {% for customer in customers %}
+        <tr>
+            <td>{{ customer.name }}</td>
+            <td>{{ customer.phone }}</td>
+            <td>{{ customer.email }}</td>
+            <td>{{ customer.address }}</td>
+            <td>
+                <a href="/customers/{{ customer.id }}/edit">Edit</a>
+                <form action="/customers/{{ customer.id }}/delete" method="POST" style="display:inline;" onsubmit="return confirm('Delete?')">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

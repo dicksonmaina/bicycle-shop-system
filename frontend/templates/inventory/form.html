@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Inventory Form - Bicycle Shop{% endblock %}
+{% block content %}
+<h1>{% if item %}Edit{% else %}Add{% endif %} Item</h1>
+<form method="POST">
+    <input type="text" name="name" placeholder="Name" value="{{ item.name if item else '' }}" required>
+    <input type="text" name="category" placeholder="Category" value="{{ item.category if item else '' }}">
+    <input type="number" name="quantity" placeholder="Quantity" value="{{ item.quantity if item else '' }}">
+    <input type="number" name="min_quantity" placeholder="Min Quantity" value="{{ item.min_quantity if item else '' }}">
+    <input type="number" step="0.01" name="unit_price" placeholder="Unit Price" value="{{ item.unit_price if item else '' }}">
+    <select name="supplier_id">
+        <option value="">Select Supplier</option>
+        {% for supplier in suppliers %}
+        <option value="{{ supplier.id }}" {% if item and item.supplier_id == supplier.id %}selected{% endif %}>{{ supplier.name }}</option>
+        {% endfor %}
+    </select>
+    <textarea name="notes" placeholder="Notes">{{ item.notes if item else '' }}</textarea>
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

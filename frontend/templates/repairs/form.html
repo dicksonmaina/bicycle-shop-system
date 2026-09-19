@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Repair Form - Bicycle Shop{% endblock %}
+{% block content %}
+<h1>{% if job %}Edit{% else %}New{% endif %} Repair</h1>
+<form method="POST">
+    <select name="customer_id" required>
+        <option value="">Select Customer</option>
+        {% for customer in customers %}
+        <option value="{{ customer.id }}" {% if job and job.customer_id == customer.id %}selected{% endif %}>{{ customer.name }}</option>
+        {% endfor %}
+    </select>
+    <select name="bicycle_id">
+        <option value="">Select Bicycle</option>
+        {% for bicycle in bicycles %}
+        <option value="{{ bicycle.id }}" {% if job and job.bicycle_id == bicycle.id %}selected{% endif %}>{{ bicycle.brand }} {{ bicycle.model }}</option>
+        {% endfor %}
+    </select>
+    <textarea name="description" placeholder="Description" required>{{ job.description if job else '' }}</textarea>
+    <input type="text" name="issue" placeholder="Issue" value="{{ job.issue if job else '' }}">
+    <input type="number" name="cost" placeholder="Cost" value="{{ job.cost if job else '' }}">
+    <select name="status">
+        <option value="Pending" {% if job and job.status == 'Pending' %}selected{% endif %}>Pending</option>
+        <option value="In Progress" {% if job and job.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+        <option value="Completed" {% if job and job.status == 'Completed' %}selected{% endif %}>Completed</option>
+    </select>
+    <select name="priority">
+        <option value="Low" {% if job and job.priority == 'Low' %}selected{% endif %}>Low</option>
+        <option value="Medium" {% if job and job.priority == 'Medium' %}selected{% endif %}>Medium</option>
+        <option value="High" {% if job and job.priority == 'High' %}selected{% endif %}>High</option>
+    </select>
+    <select name="assigned_to">
+        <option value="">Unassigned</option>
+        {% for member in staff %}
+        <option value="{{ member.id }}" {% if job and job.assigned_to == member.id %}selected{% endif %}>{{ member.name }}</option>
+        {% endfor %}
+    </select>
+    <textarea name="notes" placeholder="Notes">{{ job.notes if job else '' }}</textarea>
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

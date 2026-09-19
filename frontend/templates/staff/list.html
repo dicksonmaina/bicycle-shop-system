@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Staff - Bicycle Shop{% endblock %}
+{% block content %}
+<h1>Staff</h1>
+<a href="/staff/add"><button>Add Staff</button></a>
+<table>
+    <thead>
+        <tr><th>Name</th><th>Email</th><th>Phone</th><th>Role</th><th>Salary</th><th>Hire Date</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+        {% for member in staff %}
+        <tr>
+            <td>{{ member.name }}</td>
+            <td>{{ member.email }}</td>
+            <td>{{ member.phone }}</td>
+            <td>{{ member.role }}</td>
+            <td>KSh {{ "%.2f"|format(member.salary) }}</td>
+            <td>{{ member.hire_date.strftime('%Y-%m-%d') if member.hire_date else '' }}</td>
+            <td>
+                <a href="/staff/{{ member.id }}/edit">Edit</a>
+                <form action="/staff/{{ member.id }}/delete" method="POST" style="display:inline;" onsubmit="return confirm('Delete?')">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

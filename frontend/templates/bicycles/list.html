@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Bicycles - Bicycle Shop{% endblock %}
+{% block content %}
+<h1>Bicycles</h1>
+<a href="/bicycles/add"><button>Add Bicycle</button></a>
+<table>
+    <thead>
+        <tr><th>Customer</th><th>Brand</th><th>Model</th><th>Serial #</th><th>Color</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+        {% for bicycle in bicycles %}
+        <tr>
+            <td>{{ bicycle.customer.name if bicycle.customer else 'N/A' }}</td>
+            <td>{{ bicycle.brand }}</td>
+            <td>{{ bicycle.model }}</td>
+            <td>{{ bicycle.serial_number }}</td>
+            <td>{{ bicycle.color }}</td>
+            <td>
+                <a href="/bicycles/{{ bicycle.id }}/edit">Edit</a>
+                <form action="/bicycles/{{ bicycle.id }}/delete" method="POST" style="display:inline;" onsubmit="return confirm('Delete?')">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

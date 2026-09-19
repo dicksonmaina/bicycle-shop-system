@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Bicycle Form - Bicycle Shop{% endblock %}
+{% block content %}
+<h1>{% if bicycle %}Edit{% else %}Add{% endif %} Bicycle</h1>
+<form method="POST">
+    <select name="customer_id" required>
+        <option value="">Select Customer</option>
+        {% for customer in customers %}
+        <option value="{{ customer.id }}" {% if bicycle and bicycle.customer_id == customer.id %}selected{% endif %}>{{ customer.name }}</option>
+        {% endfor %}
+    </select>
+    <input type="text" name="brand" placeholder="Brand" value="{{ bicycle.brand if bicycle else '' }}">
+    <input type="text" name="model" placeholder="Model" value="{{ bicycle.model if bicycle else '' }}">
+    <input type="text" name="serial_number" placeholder="Serial Number" value="{{ bicycle.serial_number if bicycle else '' }}">
+    <input type="text" name="color" placeholder="Color" value="{{ bicycle.color if bicycle else '' }}">
+    <textarea name="notes" placeholder="Notes">{{ bicycle.notes if bicycle else '' }}</textarea>
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Repairs - Bicycle Shop{% endblock %}
+{% block content %}
+<h1>Repairs</h1>
+<a href="/repairs/add"><button>New Repair</button></a>
+<form method="GET" style="display:inline;">
+    <select name="status" onchange="this.form.submit()">
+        <option value="">All</option>
+        <option value="Pending" {% if status == 'Pending' %}selected{% endif %}>Pending</option>
+        <option value="In Progress" {% if status == 'In Progress' %}selected{% endif %}>In Progress</option>
+        <option value="Completed" {% if status == 'Completed' %}selected{% endif %}>Completed</option>
+    </select>
+</form>
+<table>
+    <thead>
+        <tr><th>Customer</th><th>Bicycle</th><th>Description</th><th>Status</th><th>Priority</th><th>Assigned</th><th>Date</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+        {% for repair in repairs %}
+        <tr>
+            <td>{{ repair.customer.name if repair.customer else 'N/A' }}</td>
+            <td>{{ repair.bicycle.brand if repair.bicycle else 'N/A' }}</td>
+            <td>{{ repair.description[:50] }}{% if repair.description|length > 50 %}...{% endif %}</td>
+            <td>{{ repair.status }}</td>
+            <td>{{ repair.priority }}</td>
+            <td>{{ repair.assigned_staff.name if repair.assigned_staff else 'Unassigned' }}</td>
+            <td>{{ repair.created_at.strftime('%Y-%m-%d') }}</td>
+            <td>
+                <a href="/repairs/{{ repair.id }}/edit">Edit</a>
+                <form action="/repairs/{{ repair.id }}/delete" method="POST" style="display:inline;" onsubmit="return confirm('Delete?')">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

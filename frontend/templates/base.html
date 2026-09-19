@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Bicycle Shop{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    {% if current_user.is_authenticated %}
+    <nav>
+        <a href="/">Dashboard</a>
+        <a href="/customers">Customers</a>
+        <a href="/bicycles">Bicycles</a>
+        <a href="/repairs">Repairs</a>
+        <a href="/inventory">Inventory</a>
+        <a href="/sales">Sales</a>
+        <a href="/staff">Staff</a>
+        <a href="/suppliers">Suppliers</a>
+        <a href="/reports">Reports</a>
+        <a href="/notifications">Notifications</a>
+        <a href="/logout">Logout</a>
+    </nav>
+    {% endif %}
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
