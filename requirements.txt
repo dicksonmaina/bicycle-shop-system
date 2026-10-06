@@ -5,4 +5,4 @@ Flask-Migrate==4.0.5
 Flask-Bcrypt==1.0.1
 Werkzeug==2.3.7
 python-dotenv==1.0.0
-gunicorn==21.2.0
+gunicorn==26.2.0
